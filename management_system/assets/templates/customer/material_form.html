@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Meta Source - Materials Form</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+
+<div class="container-fluid">
+  <form method="post" action="{% url 'add_form' %}">
+    {% csrf_token %}
+    <!-- Basic Details Form -->
+    <div class="row">
+      <div class="col-12">
+        <h3>Basic Details</h3>
+      </div>
+      <div class="col-6">
+        <label for="email">Email *</label>
+        <input type="email" name="email" class="form-control" required>
+      </div>
+      <div class="col-6">
+        <label for="company_name">Company Name/Person name *</label>
+        <input type="text" name="company_name" class="form-control" required>
+      </div>
+      <div class="col-6">
+        <label for="country_restrictions">Country Restrictions *</label>
+        <input type="text" name="country_restrictions" class="form-control" required>
+      </div>
+      <div class="col-6">
+        <label for="phone_no">Phone No (optional)</label>
+        <input type="text" name="phone_no" class="form-control">
+      </div>
+      <div class="col-12">
+        <label for="delivery_address">Delivery Address *</label>
+        <textarea name="delivery_address" class="form-control" required></textarea>
+      </div>
+    </div>
+
+    <!-- Materials Form -->
+    <div class="row" id="formContainer">
+      <input type="hidden" name="materials_count" id="materials_count" value="1">
+      <div class="col-12">
+        <h3>Materials Details</h3>
+      </div>
+      <div class="col-6">
+        <label for="firm_budgetary_1">Firm / Budgetary Requirement *</label>
+        <select name="firm_budgetary_1" class="form-control" required>
+          <option value="Firm">Firm (Actual Requirement)</option>
+          <option value="Budgetary">Budgetary (For Estimation Purpose)</option>
+        </select>
+      </div>
+      <div class="col-6">
+        <label for="material_1">Materials *</label>
+        <select name="material_1" class="form-control material-dropdown" required>
+          <option value="Aluminum">Aluminum</option>
+          <option value="Steel">Steel</option>
+          <option value="Stainless Steel">Stainless Steel</option>
+          <option value="Nickel/Inconel">Nickel/Inconel</option>
+          <option value="Alloy Steel">Alloy Steel</option>
+          <option value="Plastics">Plastics</option>
+          <option value="Duplex steels">Duplex steels</option>
+          <option value="Titanium">Titanium</option>
+          <option value="Nickel">Nickel</option>
+          <option value="Cobalt">Cobalt</option>
+          <option value="Copper">Copper</option>
+          <option value="Brass">Brass</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="text" name="other_material_1" class="form-control other-material" placeholder="Specify other material" style="display: none;">
+      </div>
+      <div class="col-6">
+        <label for="shape_1">Shape of Material *</label>
+        <select name="shape_1" class="form-control shape-dropdown" required>
+          <option value="Round Bar">Round Bar</option>
+          <option value="Plate/Square/Rect">Plate/Square/Rect</option>
+          <option value="Sheet">Sheet</option>
+          <option value="Hexagon">Hexagon</option>
+          <option value="Pipe/Tube">Pipe/Tube</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="text" name="other_shape_1" class="form-control other-shape" placeholder="Specify other shape" style="display: none;">
+      </div>      
+      <div class="col-6">
+        <label for="size_in_mm_1">Enter the required RM Size in Millimeter *</label>
+        <input type="text" name="size_in_mm_1" class="form-control" required>
+      </div>
+      <div class="col-6">
+        <label for="quantity_1">Enter the required Quantity in (Nos or Kgs) *</label>
+        <input type="text" name="quantity_1" class="form-control" required>
+      </div>
+      <div class="col-6">
+        <label for="material_need_date_1">Material Need Date *</label>
+        <input type="date" name="material_need_date_1" class="form-control" required>
+      </div>
+      <div class="col-12">
+        <label for="remarks_1">Remarks *</label>
+        <textarea name="remarks_1" class="form-control" required></textarea>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="row">
+      <div class="col-12">
+        <input type="submit" value="Submit" class="btn btn-primary">
+      </div>
+    </div>
+
+    {% comment %} <!-- Plus Button for Materials Form -->
+    <div class="row">
+      <div class="col-6">
+        <input type="button" id="addForm" value="+" class="btn btn-success" />
+      </div>
+    </div> {% endcomment %}
+
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    
+    $(document).ready(function() {
+      $("#addForm").click(function() {
+        // Clone the materials form and update input names to maintain uniqueness
+        var newForm = $("#formContainer").clone();
+        var count = $("#formContainer > div").length + 1;
+  
+       // Update names of input fields
+        newForm.find("select, input, textarea").each(function() {
+          var newName = $(this).attr("name").replace(/_\d+/g, "_" + count);
+          $(this).attr("name", newName);
+  
+          // Handle the "material" field and "other-material" visibility
+          if ($(this).hasClass("material-dropdown")) {
+            var otherMaterialField = $(this).siblings(".other-material");
+            var selectedOption = $(this).val();
+            if (selectedOption === "Other") {
+              otherMaterialField.show();
+            } else {
+              otherMaterialField.hide();
+            }
+          }
+        }); 
+  
+        $("#formContainer").append(newForm);
+  
+      // Update materials_count value
+        $("#materials_count").val(count);
+      });
+
+      $(".material-dropdown").change(function() {
+        // Show/hide the "Other" text field based on the selected option
+        var selectedOption = $(this).val();
+        if (selectedOption === "Other") {
+          $(this).siblings(".other-material").show();
+        } else {
+          $(this).siblings(".other-material").hide();
+        }
+      });
+    });
+  </script>
+
+</div>
+
+</body>
+</html>

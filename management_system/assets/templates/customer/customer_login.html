@@ -1,0 +1,94 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="{% static 'vendor/vendor_forms/fonts/icomoon/style.css' %}">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'vendor/vendor_forms/css/bootstrap.min.css' %}">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'vendor/vendor_forms/css/style.css' %}">
+
+    <title>Contact Form #6</title>
+  </head>
+  <body>
+  
+
+  <div class="content">
+    
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          
+
+          <div class="row justify-content-center"> 
+            <div class="col-md-6">
+              <h1 class="heading mb-4">Login Now</h1>
+              <form class="mb-5" method="POST">
+                {% csrf_token %}
+                
+                <div class="row">
+                  <div class="col-md-12 form-group">
+                    <input type="email" class="form-control" name="vendor_email" id="email" placeholder="Email">
+                  </div> 
+                </div>
+                 
+                <div class="row">
+                  <div class="col-md-12 form-group">
+                    <input type="password" class="form-control" name="password" id="subject" placeholder="Password">
+                  </div>
+                 
+                </div>
+                
+                <div class="row">
+                  <div class="col-12">
+                    <button type="submit" value="Submit" class="btn btn-primary rounded-0 py-2 px-4"> Login</button>
+                
+                  </div>
+                </div>
+              </form>
+
+              <div id="form-message-warning mt-4"></div> 
+              <div id="form-message-success">
+                Your message was sent, thank you!
+              </div>
+            </div>
+            <div class="col-md-6">
+              
+                <h3 class="heading mb-4">Grow your business with <span style="color:purple;"> META SOURCE</span></h3>
+                <p class="text-black">
+                  <i class="icon-arrow-right"style="color:purple;"></i> Get access to Global customer<br>
+                  <i class="icon-arrow-right"style="color:purple;"></i> Easy biding <br>
+                  <i class="icon-arrow-right"style="color:purple;"></i> Surplus Enquiries <br>
+                  <i class="icon-arrow-right"style="color:purple;"></i> Order Management <br>
+                </p>
+  
+                <p><img src="{% static 'vendor/vendor_forms/images/undraw-contact.svg' %}" alt="Image" class="img-fluid"></p>
+  
+  
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+    
+    
+
+    <script src="{% static 'vendor/vendor_forms/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'vendor/vendor_forms/js/popper.min.js' %}"></script>
+    <script src="{% static 'vendor/vendor_forms/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/vendor_forms/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'vendor/vendor_forms/js/main.js' %}"></script>
+
+  </body>
+</html>
