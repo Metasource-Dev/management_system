@@ -1,0 +1,119 @@
+{% extends 'vendor_base.html' %}
+{% load static %}
+
+{% block content %}
+<script>
+  $(document).ready(function(){
+      // Function to handle bid button click
+      $('.bid-button').click(function(){
+          var material_id = $(this).data('material-id');
+          var basic_details_id = $(this).data('basic-details-id');
+          var vendor_id = $(this).data('vendor-id');
+          
+          // Populate popup form fields with IDs
+          $('#material_id').val(material_id);
+          $('#basic_details_id').val(basic_details_id);
+          $('#vendor_id').val(vendor_id);
+          
+          // Show the popup
+          $('#bid-popup').show();
+      });
+  });
+</script>
+<style>
+  /* Styles for the popup */
+  #bid-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+  }
+</style>
+    <div class="main-panel">
+        <br>
+        <br>
+        <br>
+          <h3>Quotations<hr></h3>
+
+          <div class="row justify-content-center">
+              <div class="col-lg-12 grid-margin stretch-card">
+
+                  <div class="card">
+                  <div class="card-body">
+                      
+                      
+                      </p>
+                      <div class="table-responsive">
+                      <table class="table">
+                          <thead>
+                          <tr>
+                             
+                            <th>RFQ ID</th>
+                            <th>RFQ Date</th>
+                            <th>Material Specification(Any ISO/ASTM/AMS)</th>
+                            <th>Shape of Material</th>
+                            <th>Required RM Size in Millimeter </th>
+                            <th>Required Quantity in (Nos or Kgs)</th>
+                            <th>Material Need Date</th>
+                            <th>Remarks</th>
+                           <th>Country Restrictions</th>
+                            <th></th>
+                            <th></th>
+                          </tr>
+                          </thead>
+                        
+                           
+                            <tbody>
+                             
+                              <tr>
+                                {% for data in materials %}
+                                <td>{{data.material_id}}</td>
+                                <td>{{data.material_created_date}}
+                                <td>{{ data.material }}</td>
+                                <td>{{ data.shape }}</td>
+                                <td>{{ data.size_in_mm }}</td>
+                                <td>{{ data.quantity }}</td>
+                                <td>{{ data.material_need_date }}</td>
+                                
+                                <td>{{ data.remarks }}</td>
+                                {% for bdata in basic_list %}
+                                <td>{{ bdata.country_restrictions }}</td>
+                                {% endfor %}
+                                
+                                {% comment %} <button class="bid-button" data-material-id="{{ data.id }}" data-basic-details-id="{{ bdata.id }}" data-vendor-id="{{ vendor_id }}">Bid</button>
+                                <td><a href="/reject-req/{{ data.id }}" class="btn btn-danger">Reject</a></td> {% endcomment %}
+                              </tr>
+                              {% endfor %}
+                           </tbody>
+                           
+                      </table>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+          </div>    
+{% comment %} <!-- Bid popup form -->
+<div id="bid-popup">
+  <form method="post" action="{% url 'submit_bid' %}">
+      {% csrf_token %}
+      <input type="hidden" id="material_id" name="material_id">
+      <input type="hidden" id="basic_details_id" name="basic_details_id">
+      <input type="hidden" id="vendor_id" name="vendor_id">
+      Offer Size: <input type="text" name="offer_size"><br>
+      Offer Qty: <input type="text" name="offer_qty"><br>
+      Offer Price: <input type="text" name="offer_price"><br>
+      Offer Date: <input type="date" name="offer_date"><br>
+      <input type="submit" value="Submit Bid">
+  </form>
+</div> {% endcomment %}
+    
+  <!-- page-body-wrapper ends -->
+{% endblock %}
+
+ 
