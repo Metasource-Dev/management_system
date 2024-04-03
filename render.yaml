@@ -1,0 +1,22 @@
+databases:
+  - name: management_systemdb
+    plan: free
+    databaseName: management_system
+    user: management_system
+
+services:
+  - type: web
+    plan: free
+    name: management_system
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn management_system.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: management_systemdb
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
