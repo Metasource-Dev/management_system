@@ -1,0 +1,146 @@
+{% extends 'customer/customer_base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- partial -->
+<div class="main-panel">
+<div class="content-wrapper">
+
+    <div class="content">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-10">
+              <div class="row justify-content-center">
+                <div class="col-md-10">
+                  <h3 class="heading mb-4">Add Your Query</h3>
+                  <form method="post" action="{% url 'add_form' %}">
+                    {% csrf_token %}
+                    <!-- Basic Details Form -->
+                    <div class="row">
+                      <div class="col-12">
+                        <h3>Basic Details</h3>
+                      </div>
+                      <div class="col-6">
+                        <label for="email">Email *</label>
+                        <input type="email" name="email" class="form-control" required>
+                      </div>
+                      <div class="col-6">
+                        <label for="company_name">Company Name/Person name *</label>
+                        <input type="text" name="company_name" class="form-control" required>
+                      </div>
+                      <div class="col-6">
+                        <label for="country_restrictions">Country Restrictions *</label>
+                        <input type="text" name="country_restrictions" class="form-control" required>
+                      </div>
+                      <div class="col-6">
+                        <label for="phone_no">Phone No (optional)</label>
+                        <input type="text" name="phone_no" class="form-control">
+                      </div>
+                      <div class="col-12">
+                        <label for="delivery_address">Delivery Address *</label>
+                        <textarea name="delivery_address" class="form-control" required></textarea>
+                      </div>
+                    </div>
+    
+                    <!-- Materials Form -->
+                    <div class="row" id="formContainer">
+                      <input type="hidden" name="materials_count" id="materials_count" value="1">
+                      <div class="col-12">
+                        <h3>Materials Details</h3>
+                      </div>
+                      <div class="col-6">
+                        <label for="firm_budgetary_1">Firm / Budgetary Requirement *</label>
+                        <select name="firm_budgetary_1" class="form-control" required>
+                          <option value="Firm">Firm (Actual Requirement)</option>
+                          <option value="Budgetary">Budgetary (For Estimation Purpose)</option>
+                        </select>
+                      </div>
+                      <div class="col-6">
+                        <label for="material_1">Materials *</label>
+                        <select name="material_1" class="form-control material-dropdown" required>
+                          <option value="Aluminum">Aluminum</option>
+                          <option value="Steel">Steel</option>
+                          <option value="Stainless Steel">Stainless Steel</option>
+                          <option value="Nickel/Inconel">Nickel/Inconel</option>
+                          <option value="Alloy Steel">Alloy Steel</option>
+                          <option value="Plastics">Plastics</option>
+                          <option value="Duplex steels">Duplex steels</option>
+                          <option value="Titanium">Titanium</option>
+                          <option value="Nickel">Nickel</option>
+                          <option value="Cobalt">Cobalt</option>
+                          <option value="Copper">Copper</option>
+                          <option value="Brass">Brass</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <input type="text" name="other_material_1" class="form-control other-material" placeholder="Specify other material" style="display: none;">
+                      </div>
+                      <div class="col-6">
+                        <label for="shape_1">Shape of Material *</label>
+                        <select name="shape_1" class="form-control shape-dropdown" required>
+                          <option value="Round Bar">Round Bar</option>
+                          <option value="Plate/Square/Rect">Plate/Square/Rect</option>
+                          <option value="Sheet">Sheet</option>
+                          <option value="Hexagon">Hexagon</option>
+                          <option value="Pipe/Tube">Pipe/Tube</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <input type="text" name="other_shape_1" class="form-control other-shape" placeholder="Specify other shape" style="display: none;">
+                      </div>
+                      <div class="col-6">
+                        <label for="size_in_mm_1">Enter the required RM Size in Millimeter *</label>
+                        <input type="text" name="size_in_mm_1" class="form-control" required>
+                      </div>
+                      <div class="col-6">
+                        <label for="quantity_1">Enter the required Quantity in (Nos or Kgs) *</label>
+                        <input type="text" name="quantity_1" class="form-control" required>
+                      </div>
+                      <div class="col-6">
+                        <label for="material_need_date_1">Material Need Date *</label>
+                        <input type="date" name="material_need_date_1" class="form-control" required>
+                      </div>
+                      <div class="col-12">
+                        <label for="remarks_1">Remarks *</label>
+                        <textarea name="remarks_1" class="form-control" required></textarea>
+                      </div>
+                    </div>
+    
+                    <!-- Submit Button -->
+                    <div class="row">
+                      <div class="col-12">
+                        <input type="submit" value="Submit" class="btn btn-primary">
+                      </div>
+                    </div>
+    
+                    {% comment %} <!-- Plus Button for Materials Form -->
+                    <div class="row">
+                      <div class="col-6">
+                        <input type="button" id="addForm" value="+" class="btn btn-success" />
+                      </div>
+                    </div> {% endcomment %}
+    
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:partials/_footer.html -->
+ <!-- partial:partials/_footer.html -->
+ <footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022. <a href="https://www.bootstrapdash.com/" target="_blank"></a> from FarmEasy. All rights reserved.</span>
+      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> <i class="ti-heart text-danger ml-1"></i></span>
+    </div>
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a href="https://www.metasource.co.in/" target="_blank">Meta Source</a></span> 
+      </div>
+  </footer> 
+  <!-- partial -->
+</div>
+<!-- main-panel ends -->
+</div>   
+<!-- page-body-wrapper ends -->
+{% endblock %}

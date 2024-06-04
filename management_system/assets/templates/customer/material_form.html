@@ -1,139 +1,295 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<!--[if lt IE 9 ]><html class="no-js oldie" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Meta Source - Materials Form</title>
-  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <!--- basic page needs
+   ================================================== -->
+    <meta charset="utf-8">
+    <title>Meta Source</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+   ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+   ================================================== -->
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/vendor.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+
+    <!-- script
+   ================================================== -->
+    <script src="{% static 'main/js/modernizr.js' %}"></script>
+    <script src="{% static 'main/js/pace.min.js' %}"></script>
+
+    <!-- favicons
+	================================================== -->
+    <link rel="shortcut icon" href="{% static 'main/favicon.png' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'main/favicon.png' %}" type="image/x-icon">
+
 </head>
 
-<body>
+<body id="top">
 
-<div class="container-fluid">
-  <form method="post" action="{% url 'add_form' %}">
-    {% csrf_token %}
-    <!-- Basic Details Form -->
-    <div class="row">
-      <div class="col-12">
-        <h3>Basic Details</h3>
-      </div>
-      <div class="col-6">
-        <label for="email">Email *</label>
-        <input type="email" name="email" class="form-control" required>
-      </div>
-      <div class="col-6">
-        <label for="company_name">Company Name/Person name *</label>
-        <input type="text" name="company_name" class="form-control" required>
-      </div>
-      <div class="col-6">
-        <label for="country_restrictions">Country Restrictions *</label>
-        <input type="text" name="country_restrictions" class="form-control" required>
-      </div>
-      <div class="col-6">
-        <label for="phone_no">Phone No (optional)</label>
-        <input type="text" name="phone_no" class="form-control">
-      </div>
-      <div class="col-12">
-        <label for="delivery_address">Delivery Address *</label>
-        <textarea name="delivery_address" class="form-control" required></textarea>
+    <!-- header 
+   ================================================== -->
+   <header id="header" class="row">   
+
+   		<div class="header-logo">
+	        <a href="index.html">Meta Source</a>
+	    </div>
+
+	   	<nav id="header-nav-wrap">
+			<ul class="header-main-nav">
+				<li class="current"><a class="smoothscroll"  href="#home" title="home">Home</a></li>
+                <li><a class="smoothscroll"  href="#about" title="about">About</a></li>
+				<li><a class="smoothscroll"  href="{% url 'add_form' %}" title="pricing">Add Query</a></li>
+				 
+			</ul>
+            <a href="{% url 'customer_login' %}" title="sign-up" class="button button-primary cta">Customer Login</a>
+            <a href="{% url 'vendor_login' %}" title="sign-up" class="button button-primary cta">Vendor Login</a>
+		</nav>
+
+		<a class="header-menu-toggle" href="#"><span>Menu</span></a>    	
+   	
+   </header> <!-- /header -->
+  <div class="content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="row justify-content-center">
+            <div class="col-md-10">
+              <h1 class="heading text-center mb-4">Add Your Query</h1>
+              <form method="post" action="{% url 'add_form' %}">
+                {% csrf_token %}
+                <!-- Basic Details Form -->
+                <div class="row">
+                  <div class="col-12">
+                    <h3>Basic Details</h3>
+                  </div>
+                  <div class="col-6">
+                    <label for="email">Email *</label>
+                    <input type="email" name="email" class="form-control" required>
+                  </div>
+                  <div class="col-6">
+                    <label for="company_name">Company Name/Person name *</label>
+                    <input type="text" name="company_name" class="form-control" required>
+                  </div>
+                  <div class="col-6">
+                    <label for="country_restrictions">Country Restrictions *</label>
+                    <input type="text" name="country_restrictions" class="form-control" required>
+                  </div>
+                  <div class="col-6">
+                    <label for="phone_no">Phone No (optional)</label>
+                    <input type="text" name="phone_no" class="form-control">
+                  </div>
+                  <div class="col-12">
+                    <label for="delivery_address">Delivery Address *</label>
+                    <textarea name="delivery_address" class="form-control" required></textarea>
+                  </div>
+                </div>
+
+                <!-- Materials Form -->
+                <div class="row" id="formContainer">
+                  <input type="hidden" name="materials_count" id="materials_count" value="1">
+                  <div class="col-12">
+                    <h3>Materials Details</h3>
+                  </div>
+                  <div class="col-6">
+                    <label for="firm_budgetary_1">Firm / Budgetary Requirement *</label>
+                    <select name="firm_budgetary_1" class="form-control" required>
+                      <option value="Firm">Firm (Actual Requirement)</option>
+                      <option value="Budgetary">Budgetary (For Estimation Purpose)</option>
+                    </select>
+                  </div>
+                  <div class="col-6">
+                    <label for="material_1">Materials *</label>
+                    <select name="material_1" class="form-control material-dropdown" required>
+                      <option value="Aluminum">Aluminum</option>
+                      <option value="Steel">Steel</option>
+                      <option value="Stainless Steel">Stainless Steel</option>
+                      <option value="Nickel/Inconel">Nickel/Inconel</option>
+                      <option value="Alloy Steel">Alloy Steel</option>
+                      <option value="Plastics">Plastics</option>
+                      <option value="Duplex steels">Duplex steels</option>
+                      <option value="Titanium">Titanium</option>
+                      <option value="Nickel">Nickel</option>
+                      <option value="Cobalt">Cobalt</option>
+                      <option value="Copper">Copper</option>
+                      <option value="Brass">Brass</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    <input type="text" name="other_material_1" class="form-control other-material" placeholder="Specify other material" style="display: none;">
+                  </div>
+                  <div class="col-6">
+                    <label for="shape_1">Shape of Material *</label>
+                    <select name="shape_1" class="form-control shape-dropdown" required>
+                      <option value="Round Bar">Round Bar</option>
+                      <option value="Plate/Square/Rect">Plate/Square/Rect</option>
+                      <option value="Sheet">Sheet</option>
+                      <option value="Hexagon">Hexagon</option>
+                      <option value="Pipe/Tube">Pipe/Tube</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    <input type="text" name="other_shape_1" class="form-control other-shape" placeholder="Specify other shape" style="display: none;">
+                  </div>
+                  <div class="col-6">
+                    <label for="size_in_mm_1">Enter the required RM Size in Millimeter *</label>
+                    <input type="text" name="size_in_mm_1" class="form-control" required>
+                  </div>
+                  <div class="col-6">
+                    <label for="quantity_1">Enter the required Quantity in (Nos or Kgs) *</label>
+                    <input type="text" name="quantity_1" class="form-control" required>
+                  </div>
+                  <div class="col-6">
+                    <label for="material_need_date_1">Material Need Date *</label>
+                    <input type="date" name="material_need_date_1" class="form-control" required>
+                  </div>
+                  <div class="col-12">
+                    <label for="remarks_1">Remarks *</label>
+                    <textarea name="remarks_1" class="form-control" required></textarea>
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="row">
+                  <div class="col-12">
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                  </div>
+                </div>
+
+                {% comment %} <!-- Plus Button for Materials Form -->
+                <div class="row">
+                  <div class="col-6">
+                    <input type="button" id="addForm" value="+" class="btn btn-success" />
+                  </div>
+                </div> {% endcomment %}
+
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Materials Form -->
-    <div class="row" id="formContainer">
-      <input type="hidden" name="materials_count" id="materials_count" value="1">
-      <div class="col-12">
-        <h3>Materials Details</h3>
-      </div>
-      <div class="col-6">
-        <label for="firm_budgetary_1">Firm / Budgetary Requirement *</label>
-        <select name="firm_budgetary_1" class="form-control" required>
-          <option value="Firm">Firm (Actual Requirement)</option>
-          <option value="Budgetary">Budgetary (For Estimation Purpose)</option>
-        </select>
-      </div>
-      <div class="col-6">
-        <label for="material_1">Materials *</label>
-        <select name="material_1" class="form-control material-dropdown" required>
-          <option value="Aluminum">Aluminum</option>
-          <option value="Steel">Steel</option>
-          <option value="Stainless Steel">Stainless Steel</option>
-          <option value="Nickel/Inconel">Nickel/Inconel</option>
-          <option value="Alloy Steel">Alloy Steel</option>
-          <option value="Plastics">Plastics</option>
-          <option value="Duplex steels">Duplex steels</option>
-          <option value="Titanium">Titanium</option>
-          <option value="Nickel">Nickel</option>
-          <option value="Cobalt">Cobalt</option>
-          <option value="Copper">Copper</option>
-          <option value="Brass">Brass</option>
-          <option value="Other">Other</option>
-        </select>
-        <input type="text" name="other_material_1" class="form-control other-material" placeholder="Specify other material" style="display: none;">
-      </div>
-      <div class="col-6">
-        <label for="shape_1">Shape of Material *</label>
-        <select name="shape_1" class="form-control shape-dropdown" required>
-          <option value="Round Bar">Round Bar</option>
-          <option value="Plate/Square/Rect">Plate/Square/Rect</option>
-          <option value="Sheet">Sheet</option>
-          <option value="Hexagon">Hexagon</option>
-          <option value="Pipe/Tube">Pipe/Tube</option>
-          <option value="Other">Other</option>
-        </select>
-        <input type="text" name="other_shape_1" class="form-control other-shape" placeholder="Specify other shape" style="display: none;">
-      </div>      
-      <div class="col-6">
-        <label for="size_in_mm_1">Enter the required RM Size in Millimeter *</label>
-        <input type="text" name="size_in_mm_1" class="form-control" required>
-      </div>
-      <div class="col-6">
-        <label for="quantity_1">Enter the required Quantity in (Nos or Kgs) *</label>
-        <input type="text" name="quantity_1" class="form-control" required>
-      </div>
-      <div class="col-6">
-        <label for="material_need_date_1">Material Need Date *</label>
-        <input type="date" name="material_need_date_1" class="form-control" required>
-      </div>
-      <div class="col-12">
-        <label for="remarks_1">Remarks *</label>
-        <textarea name="remarks_1" class="form-control" required></textarea>
-      </div>
+   <!-- footer
+    ================================================== -->
+    <footer>
+
+      <div class="footer-main">
+          <div class="row">  
+
+              <div class="col-three md-1-3 tab-full footer-info">            
+
+                  <div class="footer-logo"></div>
+
+                   
+                  <ul class="footer-social-list">
+                      <li>
+                          <a href="#"><i class="fa fa-facebook-square"></i></a>
+                      </li>
+                      <li>
+                          <a href="#"><i class="fa fa-twitter"></i></a>
+                      </li>
+                      <li>
+                          <a href="#"><i class="fa fa-behance"></i></a>
+                      </li>
+                      <li>
+                          <a href="#"><i class="fa fa-dribbble"></i></a>
+                      </li>
+                      <li>
+                          <a href="#"><i class="fa fa-instagram"></i></a>
+                      </li>
+                  </ul>
+                  
+                  
+              </div> <!-- end footer-info -->
+
+              <div class="col-three md-1-3 tab-1-2 mob-full footer-contact">
+
+                  <h4>Contact</h4>
+
+                  <p>
+                  No.49/3,Andhrahalli,<br>
+                  2nd stage Bangalore, <br>
+                  Karnataka, INDIA <br>		        
+                  </p>
+
+                  <p>
+                  sale.metasource@gmail.com <br>
+                  Phone: +91 9398097700 <br> 
+                  </p>                    
+
+              </div> <!-- end footer-contact -->  
+
+              <div class="col-two md-1-3 tab-1-2 mob-full footer-site-links">
+
+                  <h4>Site Links</h4>
+
+                  <ul class="list-links">
+                      <li><a href="{% url 'home' %}">Home</a></li>
+                      <li><a href="#">About Us</a></li>
+                      <li><a href="{% url 'add_form' %}">Add Query</a></li>
+                      <li><a href="{% url 'customer_login' %}">Customer Login</a></li>
+                      <li><a href="{% url 'vendor_login' %}">Vendor Login</a></li>
+                       
+                  </ul>	      		
+                          
+              </div> <!-- end footer-site-links --> 
+
+              
+          </div> <!-- /row -->
+      </div> <!-- end footer-main -->
+
+
+    <div class="footer-bottom">
+
+      <div class="row">
+
+        <div class="col-twelve">
+          <div class="copyright">
+             <span>© Copyright Dazzle 2024.</span> 
+             <span>Design by <a href="#">Meta Source</a></span>		         	
+           </div>
+
+           <div id="go-top">
+              <a class="smoothscroll" title="Back to Top" href="#top"><i class="icon-arrow-up"></i></a>
+           </div>         
+        </div>
+
+      </div> <!-- end footer-bottom -->     	
+
     </div>
 
-    <!-- Submit Button -->
-    <div class="row">
-      <div class="col-12">
-        <input type="submit" value="Submit" class="btn btn-primary">
-      </div>
-    </div>
+  </footer>
 
-    {% comment %} <!-- Plus Button for Materials Form -->
-    <div class="row">
-      <div class="col-6">
-        <input type="button" id="addForm" value="+" class="btn btn-success" />
-      </div>
-    </div> {% endcomment %}
+  <div id="preloader"> 
+    <div id="loader"></div>
+  </div>  
 
-  </form>
-
+  
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script>
-    
     $(document).ready(function() {
       $("#addForm").click(function() {
         // Clone the materials form and update input names to maintain uniqueness
         var newForm = $("#formContainer").clone();
         var count = $("#formContainer > div").length + 1;
-  
-       // Update names of input fields
+
+        // Update names of input fields
         newForm.find("select, input, textarea").each(function() {
           var newName = $(this).attr("name").replace(/_\d+/g, "_" + count);
           $(this).attr("name", newName);
-  
+
           // Handle the "material" field and "other-material" visibility
           if ($(this).hasClass("material-dropdown")) {
             var otherMaterialField = $(this).siblings(".other-material");
@@ -144,11 +300,11 @@
               otherMaterialField.hide();
             }
           }
-        }); 
-  
+        });
+
         $("#formContainer").append(newForm);
-  
-      // Update materials_count value
+
+        // Update materials_count value
         $("#materials_count").val(count);
       });
 
@@ -164,7 +320,13 @@
     });
   </script>
 
-</div>
+  <!-- Java Script
+  ================================================== -->
+  <script src="{% static 'main/js/jquery-2.1.3.min.js' %}"></script>
+  <script src="{% static 'main/js/plugins.js' %}"></script>
+  <script src="{% static 'main/js/main.js' %}"></script>
 
 </body>
+
 </html>
+ 

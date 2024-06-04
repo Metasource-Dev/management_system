@@ -84,39 +84,39 @@ class VendorLoginView(View):
             messages.error(request, 'Invalid email or password.')
             return redirect('vendor_login')  # Redirect back to login page with error message
 
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class DashboardView(View):
-    @method_decorator(login_required)
+    # @method_decorator(login_required)
     def get(self, request):
         vendor_id = request.session["vendor_id"]
         return render(request, 'vendor/dashboard.html', {"vendor_id": vendor_id})
 
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class QuotationsView(View):
-    @method_decorator(login_required)
+    # @method_decorator(login_required)
     def get(self, request): 
         basic_list = Customer.objects.all()
         materials = Material.objects.all()
         vendor_id = request.session.get('vendor_id')
         return render(request, 'vendor/vendor_rfq.html', {"vendor_id": vendor_id, "materials": materials, "basic_list": basic_list})
     
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class InventoryView(View):
-    @method_decorator(login_required)
+    # @method_decorator(login_required)
     def get(self,request):
         vendor_id = request.session["vendor_id"]
         return render(request, "vendor/vendor_inventory.html")
 
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class OrdersView(View):
-    @method_decorator(login_required)
+    # @method_decorator(login_required)
     def get(self,request):
         vendor_id = request.session["vendor_id"]
         return render(request, "vendor/vendor_po.html")
     
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class BidView(View):
-    @method_decorator(login_required)
+    # @method_decorator(login_required)
     def get(self,request):
         vendor_id = request.session["vendor_id"]
         return render(request, "vendor/vendor_rfq_bid.html")
