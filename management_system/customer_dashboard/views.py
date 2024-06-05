@@ -1,47 +1,21 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Customer, Material
-from django.contrib import messages 
-from django.core.mail import EmailMultiAlternatives
-from management_system.settings import DEFAULT_FROM_EMAIL
-import email
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.core.mail import send_mail
+from vendor_dashboard.models import Vendor
+from customer_dashboard.models import Material, Customer
+import datetime
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
- 
-class CustomerDashboardView(View):
-  
-    def get(self, request):
-        
-        return render(request, 'customer/customer_dashboard.html' )
 
-class CustomerEnquiriesView(View):
-      
-    def get(self, request):
-        
-        return render(request, 'customer/customers_enquiries.html' )
-
-class CustomerOrderView(View):
-      
-    def get(self, request):
-        
-        return render(request, 'customer/customer_orders.html' )
-
-class CustomerQuotationsView(View):
-      
-    def get(self, request):
-        
-        return render(request, 'customer/customer_quotations.html' )
-
-class CustomerReceivedOrdersView(View):
-      
-    def get(self, request):
-        
-        return render(request, 'customer/customer_received_orders.html' )
-    
 class CutomerAddFormView(View):
     def get(self, request):
-        return render(request, 'customer/customer_add_enquiry.html')  # Replace 'your_template.html' with the actual template name
+        basic_list = Customer.objects.all()
+        materials = Material.objects.all()
+        customer_id = request.session.get('customer_id')
+        return render(request, 'customer/customer_add_enquiry.html',{"customer_id": customer_id, "materials": materials, "basic_list": basic_list})  
 
     def post(self, request):
         # Get form data from POST request
@@ -161,3 +135,37 @@ class AddFormView(View):
         # if msg.send():
         #     print("Sent")
         return redirect('customer_login')  # Replace 'success_url' with the URL name for the success page
+    
+class CustomerDashboardView(View):
+      
+    def get(self, request):
+        
+        return render(request, 'customer/customer_dashboard.html' )
+
+class CustomerEnquiriesView(View):
+      
+    def get(self, request): 
+        basic_list = Customer.objects.all()
+        materials = Material.objects.all()
+        customer_id = request.session.get('customer_id')
+        return render(request, 'customer/customer_enquiries.html', {"customer_id": customer_id, "materials": materials, "basic_list": basic_list})
+
+class CustomerOrderView(View):
+      
+    def get(self, request):
+        
+        return render(request, 'customer/customer_orders.html' )
+
+class CustomerQuotationsView(View):
+      
+    def get(self, request): 
+         
+        return render(request, 'customer/customer_quotations.html')
+    
+
+class CustomerReceivedOrdersView(View):
+      
+    def get(self, request):
+        
+        return render(request, 'customer/customer_received_orders.html' )
+    

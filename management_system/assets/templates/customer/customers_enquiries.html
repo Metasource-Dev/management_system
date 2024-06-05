@@ -2,24 +2,6 @@
 {% load static %}
 
 {% block content %}
-<script>
-  $(document).ready(function(){
-      // Function to handle bid button click
-      $('.bid-button').click(function(){
-          var material_id = $(this).data('material-id');
-          var basic_details_id = $(this).data('basic-details-id');
-          var vendor_id = $(this).data('vendor-id');
-          
-          // Populate popup form fields with IDs
-          $('#material_id').val(material_id);
-          $('#basic_details_id').val(basic_details_id);
-          $('#vendor_id').val(vendor_id);
-          
-          // Show the popup
-          $('#bid-popup').show();
-      });
-  });
-</script>
 <style>
   /* Styles for the popup */
   #bid-popup {
